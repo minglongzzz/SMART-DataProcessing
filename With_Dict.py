@@ -1,3 +1,10 @@
+# Read original travel and stop data csv file
+# group trips
+# calculate distance of each trip with googlemaps
+# Store the new-format data into dictionary
+# Write into new csv file called "output.csv"
+
+
 import googlemaps
 from googlemaps import Client
 import csv
