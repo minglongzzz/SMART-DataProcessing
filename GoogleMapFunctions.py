@@ -140,6 +140,24 @@ def getDistanceTransit(origin,destination,mode='transit',transitmode='bus',trans
     except:
         return None
 
+def reverseGeocodeList(lat,lon,resulttype=('neighborhood','street_address')):
+    locationDictList=MapClient.reverse_geocode((lat,lon),result_type=tuple([typ for typ in resulttype]))
+    locationDict={}
+    index=1
+    for loc in locationDictList:
+        locationDict[index]={}
+        locationDict[index]['name']=str(loc['formatted_address'])
+        lat=str(loc['geometry']['location']['lat'])
+        lon=str(loc['geometry']['location']['lng'])
+        locationDict[index]['LatLon']=tuple([lat,lon])
+        types=[str(typ) for typ in loc['types']]
+        locationDict[index]['type']=types
+        index+=1
+    return locationDict
+    
+    
+    
+    
 def matchmode(dictMode):
     if dictMode=='Car/Van':
         mode='driving'
@@ -157,34 +175,34 @@ def matchTransitMode(dictMode):
     elif dictMode=='LRT/MRT':
         transitmode='train'
     return transitmode
+    
 
-#routes = client.directions("Sydney", "Melbourne")
-#routes = MapClient.directions("1.340835, 103.962101", "1.339784, 103.956479",mode='walking')
-#distanceMatrix=MapClient.distance_matrix("1.340835, 103.962101", "1.339784, 103.956479",mode='walking')
-#dis=0
-'''
-for step in routes[0]['legs'][0]['steps']:
-    #dis+=float(step['distance']['value'])
-    HTMLInsturction=str(step['html_instructions'])
-    stepInstruction=''
-    adding=True
-    for char in HTMLInsturction:
-        if adding==True:
-            if char=='<':
-                adding=False
-                continue
-            stepInstruction+=char
-        elif adding==False:
-            if char=='>':
-                adding=True
 
-    #stepInstruction=stepInstruction.replace('<b>','')
-    #stepInstruction=stepInstruction.replace('</b>','')
-    print stepInstruction,';  distance is: '+str(step['distance']['value'])+'m',';  duration is: '+str(step['duration']['value'])+'s'
-'''
-#print dis    
-#print distanceMatrix['rows'][0]['elements'][0]['distance']['value']
+def test0():
+    routes = client.directions("Sydney", "Melbourne")
+    routes = MapClient.directions("1.340835, 103.962101", "1.339784, 103.956479",mode='walking')
+    distanceMatrix=MapClient.distance_matrix("1.340835, 103.962101", "1.339784, 103.956479",mode='walking')
+    dis=0
     
+    for step in routes[0]['legs'][0]['steps']:
+        #dis+=float(step['distance']['value'])
+        HTMLInsturction=str(step['html_instructions'])
+        stepInstruction=''
+        adding=True
+        for char in HTMLInsturction:
+            if adding==True:
+                if char=='<':
+                    adding=False
+                    continue
+                stepInstruction+=char
+            elif adding==False:
+                if char=='>':
+                    adding=True
+        print stepInstruction,';  distance is: '+str(step['distance']['value'])+'m',';  duration is: '+str(step['duration']['value'])+'s'
     
-    
-    
+    print dis    
+    print distanceMatrix['rows'][0]['elements'][0]['distance']['value']
+        
+        
+        
+        

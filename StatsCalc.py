@@ -39,10 +39,13 @@ import GoogleMapFunctions
 class User():
     def __init__(self,userid,dictionary):
         self.userid=userid
-        self.dict=dictionary
-    def getTrip(self,tripid):
-        pass
-    def calculateStats(self):
+        self.dict=dictionary[userid]
+        
+    def getTrip(self,tripIndex):
+        trip=[{(key,self.dict[key]) for key in self.dict.keys() if (self.dict[key]['Trip Index']==tripIndex and self.dict[key]['Travel/Stop']=='Travel')}]
+        return trip
+        
+    def calculateStatsforTrip(self,tripIndex):
         pass
     def plotStatistics(self):
         pass

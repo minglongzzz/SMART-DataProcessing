@@ -109,13 +109,13 @@ def readCombinedCSVUser(Csvfile):
     return CombinedDict
     
 
-
+CombinedDict=readCombinedCSVUser(CombinedCsvFile)
 
 if __name__=="__main__":
     #combineCSV(TravelCsvFile,StopCsvFile,CombinedCsvFile)  #iniitalizing combined CSV
     #TravelDict=readCSVUser(TravelCsvFile)
     #StopDict=readCSVUser(StopCsvFile)
-    CombinedDict=readCombinedCSVUser(CombinedCsvFile)
+    pass    
 
 
 
