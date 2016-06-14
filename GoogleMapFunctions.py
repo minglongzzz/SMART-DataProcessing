@@ -133,6 +133,13 @@ def getDistance(origin,destination,mode='walking',alternatives=False):
     except:
         return None
 
+def getDistanceTransit(origin,destination,mode='transit',transitmode='bus',transitroute='fewer_transfers',alternatives=False):
+    try:
+        distanceMatrix=MapClient.distance_matrix(origin,destination,mode,alternatives,transit_mode=transitmode,transit_routing_preference=transitroute)
+        return distanceMatrix['rows'][0]['elements'][0]['distance']['value']
+    except:
+        return None
+
 def matchmode(dictMode):
     if dictMode=='Car/Van':
         mode='driving'
@@ -143,6 +150,13 @@ def matchmode(dictMode):
     else:
         mode='walking'
     return mode
+
+def matchTransitMode(dictMode):
+    if dictMode=='Bus':
+        transitmode='bus'
+    elif dictMode=='LRT/MRT':
+        transitmode='train'
+    return transitmode
 
 #routes = client.directions("Sydney", "Melbourne")
 #routes = MapClient.directions("1.340835, 103.962101", "1.339784, 103.956479",mode='walking')

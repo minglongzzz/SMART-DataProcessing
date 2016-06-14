@@ -108,21 +108,6 @@ def readCombinedCSVUser(Csvfile):
                 CombinedDict[row['User ID']][TravelID]={fieldname:row[fieldname] for fieldname in Fieldnames}
     return CombinedDict
     
-    
-def formatDictUser(travelDict,stopDict):
-    TravelDict=dict()
-    for user in travelDict.keys():
-        TravelDict[user]=dict()
-        for index,tripDetails in enumerate(travelDict[user].items()):
-            if stopDict[user][tripDetails[0]]['Main Activity']=="Change Mode/Transfer":
-                start=tripDetails[0]
-                for index2,tripDetails2 in enumerate(travelDict[user].items()):
-                    pass
-            pass
-        pass
-        
-    return TravelDict
-
 
 
 
