@@ -10,7 +10,6 @@ import time
 import datetime
 import csv
 import sys
-from GoogleMapTest import *
 
 TravelCsvFile="/Users/minglong_zhou/Documents/Singapore/SUTD/Undergraduate/Year_3/Term8/Capstone 2/travel_summary_all.csv"
 StopCsvFile="/Users/minglong_zhou/Documents/Singapore/SUTD/Undergraduate/Year_3/Term8/Capstone 2/stops_summary_all.csv"
@@ -125,16 +124,6 @@ def formatDictUser(travelDict,stopDict):
     return TravelDict
 
 
-class User():
-    def __init__(self,id,dictionary):
-        self.id=id
-        self.dict=dictionary
-    def getTrip(self,tripid):
-        pass
-    def calculateStats(self):
-        pass
-    def plotStatistics(self):
-        pass
 
 
 if __name__=="__main__":
