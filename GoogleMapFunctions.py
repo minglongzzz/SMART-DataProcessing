@@ -96,9 +96,6 @@
 """Tests for the directions module."""
 
 from datetime import datetime
-import responses
-import requests
-import time
 import googlemaps
 
 
@@ -131,14 +128,14 @@ def getDistance(origin,destination,mode='walking',alternatives=False):
         distanceMatrix=MapClient.distance_matrix(origin,destination,mode,alternatives)
         return distanceMatrix['rows'][0]['elements'][0]['distance']['value']
     except:
-        return None
+        return 0
 
 def getDistanceTransit(origin,destination,mode='transit',transitmode='bus',transitroute='fewer_transfers',alternatives=False):
     try:
         distanceMatrix=MapClient.distance_matrix(origin,destination,mode,alternatives,transit_mode=transitmode,transit_routing_preference=transitroute)
         return distanceMatrix['rows'][0]['elements'][0]['distance']['value']
     except:
-        return None
+        return 0
 
 def reverseGeocodeList(lat,lon,resulttype=('neighborhood','street_address')):
     locationDictList=MapClient.reverse_geocode((lat,lon),result_type=tuple([typ for typ in resulttype]))
@@ -156,14 +153,14 @@ def reverseGeocodeList(lat,lon,resulttype=('neighborhood','street_address')):
     return locationDict
     
     
-    
-    
 def matchmode(dictMode):
-    if dictMode=='Car/Van':
+    if dictMode=='Car/Van' or dictMode=='Taxi':
         mode='driving'
     elif dictMode=='Bus' or dictMode=='LRT/MRT':
         mode='transit'
     elif dictMode=='Motorcycle/Scooter':
+        mode='bicycling'
+    elif dictMode=='Bicycle':
         mode='bicycling'
     else:
         mode='walking'
@@ -179,13 +176,13 @@ def matchTransitMode(dictMode):
 
 
 def test0():
-    routes = client.directions("Sydney", "Melbourne")
-    routes = MapClient.directions("1.340835, 103.962101", "1.339784, 103.956479",mode='walking')
+    #routes = MapClient.directions("1.340835, 103.962101", "1.339784, 103.956479",mode='walking')
+    routes = MapClient.directions((1.340835,103.962101), (1.339784, 103.956479),mode='walking')
     distanceMatrix=MapClient.distance_matrix("1.340835, 103.962101", "1.339784, 103.956479",mode='walking')
     dis=0
     
     for step in routes[0]['legs'][0]['steps']:
-        #dis+=float(step['distance']['value'])
+        dis+=float(step['distance']['value'])
         HTMLInsturction=str(step['html_instructions'])
         stepInstruction=''
         adding=True
